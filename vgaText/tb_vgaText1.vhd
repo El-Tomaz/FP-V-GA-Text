@@ -95,9 +95,9 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-		--file textFile: text;
+		file textFile: text;
    begin		
-		--file_open(textFile, "textMemory.txt,", write_mode);
+		file_open(textFile, "textMemory.txt,", write_mode);
 	
       -- hold reset state for 100 ns.
       wait for 100 ns;	
@@ -105,7 +105,7 @@ BEGIN
       wait for clk_period*10;
 
       -- insert stimulus here 
-		--writeline(textFile, buf_in);
+		writeline(textFile, buf_in);
 		reset <= '1';
 		wait for 1 ms;
 		reset <= '0';

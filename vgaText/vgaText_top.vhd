@@ -61,13 +61,17 @@ architecture Behavioral of vgaText_top is
 	signal nextVCount: integer := 480;
 	
 	
-	constant NUM_TEXT_ELEMENTS: integer := 3;
+	constant NUM_TEXT_ELEMENTS: integer := 1;
 	signal inArbiterPortArray: type_inArbiterPortArray(0 to NUM_TEXT_ELEMENTS-1) := (others => init_type_inArbiterPort);
 	signal outArbiterPortArray: type_outArbiterPortArray(0 to NUM_TEXT_ELEMENTS-1) := (others => init_type_outArbiterPort);
 	
 	signal drawElementArray: type_drawElementArray(0 to NUM_TEXT_ELEMENTS-1) := (others => init_type_drawElement);
 
 	signal led_reg: std_logic_vector(7 downto 0) := (others => '0');
+
+	signal tt: string(1 to 9) := "Ola mundo";
+
+	signal p: point_2d := (50,50);
 begin
 
 	Led <= led_reg;
@@ -87,14 +91,14 @@ begin
 
 	textDrawElement: entity work.text_line
 	generic map (
-		textPassageLength => 11
+		textPassageLength => 9
 	)
 	port map(
 		clk => clk,
 		reset => reset,
-		textPassage => "Hello World",
-		position => (50, 50),
-		colorMap => (10 downto 0 => "111" & "111" & "11"),
+		textPassage => tt,
+		position => p,
+		colorMap => (others => "111" & "111" & "11"),
 		inArbiterPort => inArbiterPortArray(0),
 		outArbiterPort => outArbiterPortArray(0),
 		hCount => nextHCount,
@@ -103,46 +107,15 @@ begin
 	);
 	
 	
-	textDrawElement2: entity work.text_line
-	generic map (
-		textPassageLength => 5
-	)
-	port map(
-		clk => clk,
-		reset => reset,
-		textPassage => SOH & " : " & STX,
-		position => (50, 200),
-		colorMap => (4 downto 0 => "111" & "111" & "11"),
-		inArbiterPort => inArbiterPortArray(1),
-		outArbiterPort => outArbiterPortArray(1),
-		hCount => nextHCount,
-		vCount => nextVCount,
-		drawElement => drawElementArray(1)
-	);
 	
-	textDrawElement3: entity work.text_line
-	generic map (
-		textPassageLength => 8
-	)
-	port map(
-		clk => clk,
-		reset => reset,
-		textPassage => "I " & "<3" & " You",
-		position => (70, 125),
-		colorMap => (7 downto 4 => "111" & "111" & "11", 3 downto 2 => "111" & "000" & "00", 1 downto 0 => "111" & "111" & "11"),
-		inArbiterPort => inArbiterPortArray(2),
-		outArbiterPort => outArbiterPortArray(2),
-		hCount => nextHCount,
-		vCount => nextVCount,
-		drawElement => drawElementArray(2)
-	);
-	
-	
+
 	vgasignal: process(clk)
 		variable divide_by_2 : std_logic := '0';
 		variable rgbDrawColor : std_logic_vector(7 downto 0) := (others => '0');
 	begin
 		
+		
+
 		if rising_edge(clk) then
 			if reset = '1' then
 				hsync <= '1';
@@ -209,6 +182,7 @@ begin
 					if (hCount < 640 and vCount < 480) then
 						
 						
+						p <= (72*(hcount/72), (16 * (vcount / 16)));
 						
 						-- Draw stack:
 						-- Default is black

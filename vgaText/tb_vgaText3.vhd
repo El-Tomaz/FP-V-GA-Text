@@ -129,31 +129,31 @@ BEGIN
 			
 			-- Write the time
 			write(line_el, now); --write the line.
-			write(line_el, ":"); --write the line.
+			write(line_el, string'(":")); --write the line.
 			--writeline(file_pointer, line_el); --write the contents into the file.
 			
 			-- Write the hsync
-			write(line_el, " ");
+			write(line_el, string'(" "));
 			write(line_el, hsync); --write the line.
 			--writeline(file_pointer, line_el); --write the contents into the file.
 			
 			-- Write the vsync
-			write(line_el, " ");
+			write(line_el, string'(" "));
 			write(line_el, vsync); --write the line.
 			--writeline(file_pointer, line_el); --write the contents into the file.
 			
 			-- Write the red
-			write(line_el, " ");
+			write(line_el, string'(" "));
 			write(line_el, Red); --write the line.
 			--writeline(file_pointer, line_el); --write the contents into the file.
 			
 			-- Write the green
-			write(line_el, " ");
+			write(line_el, string'(" "));
 			write(line_el, Green); --write the line.
 			--writeline(file_pointer, line_el); --write the contents into the file.
 			
 			-- Write the blue
-			write(line_el, " ");
+			write(line_el, string'(" "));
 			write(line_el, Blue); --write the line.
 			
 			writeline(file_pointer, line_el); --write the contents into the file.

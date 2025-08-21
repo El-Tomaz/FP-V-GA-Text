@@ -111,7 +111,7 @@ begin
 	initializeMemory: process(clk)
 		variable nextData: boolean := true;
 		variable curr_addr: integer range 0 to 15 := 0; -- The current row of the character we are working on
-		variable curr_char: integer range 1 to textPassage'length := 1; -- Strings start at 1
+		variable curr_char: integer range 1 to (textPassage'length + 1) := 1; -- Strings start at 1
 	begin
 		if rising_edge(clk) then
 			if reset = '1' then
